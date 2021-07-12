@@ -13,6 +13,6 @@
 -Microsoft.EntityFrameworkCore.InMemory\
 -Microsoft.EntityFrameworkCore\
 -AutoMapper\
--AutoMapper.Extensions.Microsoft.DependencyInjection
-##Database Diagram
+-AutoMapper.Extensions.Microsoft.DependencyInjection\
+## Database Diagram
 ![D Sonia Database](https://user-images.githubusercontent.com/55459636/125369911-e092dd00-e342-11eb-9ba7-f12186e0d417.png)
