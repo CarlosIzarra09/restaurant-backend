@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Models
+namespace DSonia.API.Resources
 {
-    public class User
+    public class UserResource
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-        [JsonIgnore]
+        
         public string PasswordHash { get; set; }
     }
 }

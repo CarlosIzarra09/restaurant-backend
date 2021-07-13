@@ -11,6 +11,7 @@ namespace DSonia.API.Domain.Models
         public float Amortize { get; set; }
         public DateTime PayDate { get; set; }
         public DateTime PayTime { get; set; }
+        public int MoneylenderId { get; set; }
         public Moneylender Moneylender { get; set; }
     }
 }

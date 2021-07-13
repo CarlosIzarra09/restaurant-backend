@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Models
+namespace DSonia.API.Resources
 {
-    public class User
+    public class SaveUserResource
     {
-        public int Id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
+        [Required]
+        [MaxLength(20)]
         public string Username { get; set; }
-        [JsonIgnore]
+        [Required]
+        [MaxLength(20)]
         public string PasswordHash { get; set; }
     }
 }

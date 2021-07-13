@@ -1,5 +1,8 @@
+using DSonia.API.Domain.Persistence.Contexts;
+using DSonia.API.Domain.Persistence.Repositories;
 using DSonia.API.Domain.Services;
 using DSonia.API.Exceptions;
+using DSonia.API.Persistence.Repositories;
 using DSonia.API.Services;
 using DSonia.API.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -61,11 +65,25 @@ namespace DSonia.API
                     ValidateAudience = false
                 };
             });
-            //Deoendency Injection
-            services.AddScoped<IUserService, UserService>();
-            services.AddAutoMapper(typeof(Startup).Assembly);
 
-            services.AddControllers();
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            //Dependency Injection
+            // repositories:
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            // services:
+            services.AddScoped<IUserService, UserService>();
+
+
+
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DSonia.API", Version = "v1" });

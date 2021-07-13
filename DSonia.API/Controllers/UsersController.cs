@@ -1,5 +1,9 @@
-﻿using DSonia.API.Domain.Services;
+﻿using AutoMapper;
+using DSonia.API.Domain.Models;
+using DSonia.API.Domain.Services;
 using DSonia.API.Domain.Services.Communication;
+using DSonia.API.Extentions;
+using DSonia.API.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,24 +19,20 @@ namespace DSonia.API.Controllers
     [Route("/api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users = _userService.GetAll();
-            return Ok(users);
-        }
 
         [AllowAnonymous]//This endpoint is an exception
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthenticationRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticationRequest request)
         {
-            var response = _userService.Authenticate(request);
+            var response = await _userService.Authenticate(request);
             if (response == null)
                 return BadRequest(new { message = "Invalid Username or Password" });
             return Ok(response);
@@ -40,10 +40,46 @@ namespace DSonia.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            _userService.Register(request);
-            return Ok(new { message = "Registration successful" });
+            var result = await _userService.Register(request);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var userResource = _mapper.Map<User, UserResource>(result.Resource);
+            return Ok(userResource);
+        }
+
+        //[AllowAnonymous]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserResource resource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorMessages());
+            }
+
+            var user = _mapper.Map<SaveUserResource, User>(resource);
+            var result = await _userService.UpdateAsync(id, user);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var userResource = _mapper.Map<User, UserResource>(result.Resource);
+            return Ok(userResource);
+        }
+
+        //[AllowAnonymous]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var result = await _userService.DeleteAsync(id);
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var userResource = _mapper.Map<User, UserResource>(result.Resource);
+            return Ok(userResource);
         }
     }
 }

@@ -9,8 +9,9 @@ namespace DSonia.API.Domain.Services
 {
     public interface IUserService
     {
-        AuthenticationResponse Authenticate(AuthenticationRequest request);
-        void Register(RegisterRequest request);
-        IEnumerable<User> GetAll();
+        Task<AuthenticationResponse> Authenticate(AuthenticationRequest request);
+        Task<UserResponse> Register(RegisterRequest request);
+        Task<UserResponse> UpdateAsync(int id, User user);
+        Task<UserResponse> DeleteAsync(int id);
     }
 }
