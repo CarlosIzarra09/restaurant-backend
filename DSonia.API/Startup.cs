@@ -1,3 +1,8 @@
+using DSonia.API.Domain.Services;
+using DSonia.API.Exceptions;
+using DSonia.API.Services;
+using DSonia.API.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,10 +11,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DSonia.API
@@ -26,6 +33,37 @@ namespace DSonia.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Add CORS
+            services.AddCors();
+            services.AddControllers();
+
+            //AppSettings Section injection
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            //JSON web token authentication configuration
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            //Authentication Service Configuration
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x=> {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            //Deoendency Injection
+            services.AddScoped<IUserService, UserService>();
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,7 +86,17 @@ namespace DSonia.API
 
             app.UseRouting();
 
+            //CORS Configuration
+            app.UseCors(x => x.SetIsOriginAllowed(origin => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+
+            //Authentication Support
+            app.UseAuthentication();
+
             app.UseAuthorization();
+            app.UseMiddleware<ExceptionHandlerMiddleware>(); 
 
             app.UseEndpoints(endpoints =>
             {
