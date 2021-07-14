@@ -74,9 +74,12 @@ namespace DSonia.API
             // repositories:
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             // services:
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAttendanceService, AttendanceService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
 
 

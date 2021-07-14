@@ -15,6 +15,8 @@ namespace DSonia.API.Mapping
         {
             CreateMap<RegisterRequest, User>();
             CreateMap<SaveUserResource, User>();
+            CreateMap<SaveAttendanceResource, Attendance>();
+            CreateMap<SaveEmployeeResource, Employee>();
         }
     }
 }

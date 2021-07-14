@@ -17,6 +17,7 @@ namespace DSonia.API.Controllers
     [Authorize] //any users who will want access to this endpoint must be authenticaded
     [ApiController]
     [Route("/api/[controller]")]
+    [Produces("application/json")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
