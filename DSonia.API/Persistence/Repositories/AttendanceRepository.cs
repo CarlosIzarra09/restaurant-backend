@@ -24,7 +24,7 @@ namespace DSonia.API.Persistence.Repositories
         {
             IEnumerable<Attendance> attendances = await _context.Attendances.Where(p => p.EmployeeId == employeeId && p.Id == attendanceId)
                 .ToListAsync();
-            return !attendances.Any() ? null:attendances.First();
+            return !attendances.Any() ? attendances.First():null;
         }
 
         public async Task<Attendance> FindById(int id)

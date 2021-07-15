@@ -21,6 +21,9 @@ namespace DSonia.API.Mapping
             CreateMap<Order, OrderResource>();
             CreateMap<PaymentMethod, PaymentMethodResource>();
             CreateMap<Client, ClientResource>();
+            CreateMap<Category, CategoryResource>();
+            CreateMap<Product, ProductResource>();
+            CreateMap<OrderDetail, OrderDetailResource>();
         }
     }
 }

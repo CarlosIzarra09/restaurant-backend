@@ -83,6 +83,9 @@ namespace DSonia.API
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             // services:
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAttendanceService, AttendanceService>();
@@ -91,6 +94,9 @@ namespace DSonia.API
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
 
 
 
