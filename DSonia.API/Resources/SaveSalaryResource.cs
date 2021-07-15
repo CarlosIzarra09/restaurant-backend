@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Models
+namespace DSonia.API.Resources
 {
-    public class Salary
+    public class SaveSalaryResource
     {
-        public int Id { get; set; }
+        [Required]
         public float Mount { get; set; }
+        [Required]
         public DateTime PayDate { get; set; }
         //relationship
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
     }
 }

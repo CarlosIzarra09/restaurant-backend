@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DSonia.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     [Produces("application/json")]

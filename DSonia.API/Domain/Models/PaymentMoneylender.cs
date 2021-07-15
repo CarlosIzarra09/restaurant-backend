@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DSonia.API.Domain.Models
 {
-    public class PayMoneylender
+    public class PaymentMoneylender
     {
         public int Id { get; set; }
         public float Amortize { get; set; }

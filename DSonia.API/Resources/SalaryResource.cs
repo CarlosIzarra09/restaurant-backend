@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Models
+namespace DSonia.API.Resources
 {
-    public class PaySupplier
+    public class SalaryResource
     {
         public int Id { get; set; }
+        public float Mount { get; set; }
         public DateTime PayDate { get; set; }
-        public string Comment { get; set; }
-        public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        //relationship
+        public EmployeeResource Employee { get; set; }
     }
 }

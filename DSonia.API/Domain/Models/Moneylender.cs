@@ -12,6 +12,6 @@ namespace DSonia.API.Domain.Models
         public int Phone { get; set; }
         public DateTime DebtDate { get; set; }
         public DateTime DebtTotal { get; set; }
-        public IList<PayMoneylender> PayMoneylenders { get; set; }
+        public IList<PaymentMoneylender> PaymentMoneylenders { get; set; }
     }
 }

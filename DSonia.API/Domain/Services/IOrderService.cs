@@ -1,14 +1,14 @@
 ﻿using DSonia.API.Domain.Models;
+using DSonia.API.Domain.Services.Communication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Persistence.Repositories
+namespace DSonia.API.Domain.Services
 {
-    public interface IOrderRepository
+    public interface IOrderService
     {
-        Task<Order> FindById(int id);
         Task<IEnumerable<Order>> ListAsync();
         Task<IEnumerable<Order>> ListAndRangeDateAsync(DateTime startAt, DateTime endAt);
         Task<IEnumerable<Order>> ListByEmployeeIdAsync(int employeeId);
@@ -17,9 +17,9 @@ namespace DSonia.API.Domain.Persistence.Repositories
         Task<IEnumerable<Order>> ListByClientIdAndRangeDateAsync(int clientId, DateTime startAt, DateTime endAt);
         Task<IEnumerable<Order>> ListByPaymentMethodIdAsync(int paymentMethodId);
         Task<IEnumerable<Order>> ListByPaymentMethodIdAndRangeDateAsync(int paymentMethodId, DateTime startAt, DateTime endAt);
-
-        Task AddAsync(Order order);
-        void Update(Order order);
-        void Remove(Order order);
+        Task<OrderResponse> GetByIdAsync(int id);
+        Task<OrderResponse> SaveAsync(int clientId,Order order);
+        Task<OrderResponse> UpdateAsync(int id, Order order);
+        Task<OrderResponse> DeleteAsync(int id);
     }
 }

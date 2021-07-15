@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace DSonia.API.Domain.Models
 {
-    public class Salary
+    public class PaymentSupplier
     {
         public int Id { get; set; }
-        public float Mount { get; set; }
         public DateTime PayDate { get; set; }
-        //relationship
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public string Comment { get; set; }
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace DSonia.API.Controllers
 {
-    [Authorize] //any users who will want access to this endpoint must be authenticaded
+    //[Authorize] //any users who will want access to this endpoint must be authenticaded
     [ApiController]
-    [Route("/api/employees/{employeeId}/attendances")]
+    [Route("/api/employees/{employeeId}/attendances",Name ="Attendances")]
     [Produces("application/json")]
     public class EmployeeAttendancesController :ControllerBase
     {

@@ -18,8 +18,8 @@ namespace DSonia.API.Domain.Persistence.Contexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<PayMoneylender> PayMoneylenders { get; set; }
-        public DbSet<PaySupplier> PaySuppliers { get; set; }
+        public DbSet<PaymentMoneylender> PaymentMoneylenders { get; set; }
+        public DbSet<PaymentSupplier> PaymentSuppliers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Salary> Salaries { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -59,7 +59,7 @@ namespace DSonia.API.Domain.Persistence.Contexts
             builder.Entity<Salary>().ToTable("Salaries");
             builder.Entity<Salary>().HasKey(p => p.Id);
             builder.Entity<Salary>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Salary>().Property(p => p.mount).IsRequired();
+            builder.Entity<Salary>().Property(p => p.Mount).IsRequired();
             builder.Entity<Salary>().Property(p => p.PayDate).IsRequired();
             //Relationships
             builder.Entity<Salary>()
@@ -186,19 +186,19 @@ namespace DSonia.API.Domain.Persistence.Contexts
             builder.Entity<Supplier>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Supplier>().Property(p => p.Phone);
             builder.Entity<Supplier>()
-                .HasMany(p => p.PaySuppliers)
+                .HasMany(p => p.PaymentSuppliers)
                 .WithOne(p => p.Supplier)
                 .HasForeignKey(p => p.SupplierId);
 
             //PaySupplier
-            builder.Entity<PaySupplier>().ToTable("PaySuppliers");
-            builder.Entity<PaySupplier>().HasKey(p => p.Id);
-            builder.Entity<PaySupplier>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<PaySupplier>().Property(p => p.PayDate).IsRequired();
-            builder.Entity<PaySupplier>().Property(p => p.Comment);
-            builder.Entity<PaySupplier>()
+            builder.Entity<PaymentSupplier>().ToTable("PaymentSuppliers");
+            builder.Entity<PaymentSupplier>().HasKey(p => p.Id);
+            builder.Entity<PaymentSupplier>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<PaymentSupplier>().Property(p => p.PayDate).IsRequired();
+            builder.Entity<PaymentSupplier>().Property(p => p.Comment);
+            builder.Entity<PaymentSupplier>()
                .HasOne(o => o.Supplier)
-               .WithMany(e => e.PaySuppliers)
+               .WithMany(e => e.PaymentSuppliers)
                .HasForeignKey(o => o.SupplierId);
 
             //Moneylender
@@ -210,20 +210,20 @@ namespace DSonia.API.Domain.Persistence.Contexts
             builder.Entity<Moneylender>().Property(p => p.DebtDate).IsRequired();
             builder.Entity<Moneylender>().Property(p => p.DebtTotal).IsRequired();
             builder.Entity<Moneylender>()
-                .HasMany(p => p.PayMoneylenders)
+                .HasMany(p => p.PaymentMoneylenders)
                 .WithOne(p => p.Moneylender)
                 .HasForeignKey(p => p.MoneylenderId);
 
             //PayMoneylender
-            builder.Entity<PayMoneylender>().ToTable("PayMoneylenders");
-            builder.Entity<PayMoneylender>().HasKey(p => p.Id);
-            builder.Entity<PayMoneylender>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<PayMoneylender>().Property(p => p.Amortize).IsRequired();
-            builder.Entity<PayMoneylender>().Property(p => p.PayDate).IsRequired();
-            builder.Entity<PayMoneylender>().Property(p => p.PayTime).IsRequired();
-            builder.Entity<PayMoneylender>()
+            builder.Entity<PaymentMoneylender>().ToTable("PaymentMoneylenders");
+            builder.Entity<PaymentMoneylender>().HasKey(p => p.Id);
+            builder.Entity<PaymentMoneylender>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<PaymentMoneylender>().Property(p => p.Amortize).IsRequired();
+            builder.Entity<PaymentMoneylender>().Property(p => p.PayDate).IsRequired();
+            builder.Entity<PaymentMoneylender>().Property(p => p.PayTime).IsRequired();
+            builder.Entity<PaymentMoneylender>()
                .HasOne(o => o.Moneylender)
-               .WithMany(e => e.PayMoneylenders)
+               .WithMany(e => e.PaymentMoneylenders)
                .HasForeignKey(o => o.MoneylenderId);
 
 

@@ -24,7 +24,7 @@ namespace DSonia.API.Persistence.Repositories
         {
             IEnumerable<Attendance> attendances = await _context.Attendances.Where(p => p.EmployeeId == employeeId && p.Id == attendanceId)
                 .ToListAsync();
-            return attendances.Count()==0?null:attendances.First();
+            return !attendances.Any() ? null:attendances.First();
         }
 
         public async Task<Attendance> FindById(int id)
@@ -40,7 +40,7 @@ namespace DSonia.API.Persistence.Repositories
         public async Task<IEnumerable<Attendance>> ListByEmployeeIdAndRangeDateAsync(int employeeId, DateTime startAt, DateTime endAt)
         {
             return await _context.Attendances
-                .Where(c => c.AttendanceDate.CompareTo(startAt) > 0 && c.AttendanceDate.CompareTo(endAt) < 0)
+                .Where(c => c.AttendanceDate.CompareTo(startAt) > 0 && c.AttendanceDate.CompareTo(endAt) < 0 && c.EmployeeId == employeeId)
                 .Include(c => c.Employee)
                 .ToListAsync();
         }

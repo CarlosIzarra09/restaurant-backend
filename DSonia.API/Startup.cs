@@ -2,6 +2,7 @@ using DSonia.API.Domain.Persistence.Contexts;
 using DSonia.API.Domain.Persistence.Repositories;
 using DSonia.API.Domain.Services;
 using DSonia.API.Exceptions;
+using DSonia.API.Extensions;
 using DSonia.API.Persistence.Repositories;
 using DSonia.API.Services;
 using DSonia.API.Settings;
@@ -39,7 +40,9 @@ namespace DSonia.API
         {
             //Add CORS
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers(o=> {
+                o.Conventions.Add(new ControllerDocumentationConvention());
+            });
 
             //AppSettings Section injection
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -76,11 +79,18 @@ namespace DSonia.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ISalaryRepository, SalaryRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
             // services:
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAttendanceService, AttendanceService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
-
+            services.AddScoped<ISalaryService, SalaryService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 
 
 

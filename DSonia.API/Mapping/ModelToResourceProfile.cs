@@ -17,6 +17,10 @@ namespace DSonia.API.Mapping
             CreateMap<User, UserResource>();
             CreateMap<Attendance, AttendanceResource>();
             CreateMap<Employee, EmployeeResource>();
+            CreateMap<Salary, SalaryResource>();
+            CreateMap<Order, OrderResource>();
+            CreateMap<PaymentMethod, PaymentMethodResource>();
+            CreateMap<Client, ClientResource>();
         }
     }
 }

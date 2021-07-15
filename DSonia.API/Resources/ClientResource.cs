@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DSonia.API.Domain.Models
+namespace DSonia.API.Resources
 {
-    public class Supplier
+    public class ClientResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Phone { get; set; }
-        public int PaySupplierId { get; set; }
-        public IList<PaymentSupplier> PaymentSuppliers{ get; set; }
+        public string Address { get; set; }
     }
 }
