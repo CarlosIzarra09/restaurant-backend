@@ -25,7 +25,7 @@ namespace DSonia.API.Persistence.Repositories
         {
             IEnumerable<OrderDetail> orderDetails = await _context.OrderDetails.Where(p => p.OrderId == orderId && p.ProductId == productId)
                 .ToListAsync();
-            return !orderDetails.Any() ? orderDetails.First() : null;
+            return orderDetails.Any() ? orderDetails.First() : null;
         }
 
         public async Task<IEnumerable<OrderDetail>> ListByOrderIdAsync(int orderId)

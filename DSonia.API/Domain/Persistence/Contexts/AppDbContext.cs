@@ -159,7 +159,6 @@ namespace DSonia.API.Domain.Persistence.Contexts
             builder.Entity<Product>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Product>().Property(p => p.UnitPrice).IsRequired();
-            builder.Entity<Product>().Property(p => p.UnitInStock).IsRequired();
             builder.Entity<Product>()
                .HasOne(o => o.Category)
                .WithMany(e => e.Products)
@@ -172,6 +171,7 @@ namespace DSonia.API.Domain.Persistence.Contexts
             //Categories
             builder.Entity<Category>().ToTable("Categories");
             builder.Entity<Category>().HasKey(p => p.Id);
+            builder.Entity<Category>().Property(p => p.Quantity);
             builder.Entity<Category>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Category>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Category>()

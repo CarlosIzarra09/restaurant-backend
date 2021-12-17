@@ -24,7 +24,7 @@ namespace DSonia.API.Persistence.Repositories
         {
             IEnumerable<Salary> salaries = await _context.Salaries.Where(p => p.EmployeeId == employeeId && p.Id == salaryId)
                 .ToListAsync();
-            return salaries.Count() == 0 ? null : salaries.First();
+            return salaries.Any() ?  salaries.First():null;
         }
 
         public async Task<Salary> FindById(int id)

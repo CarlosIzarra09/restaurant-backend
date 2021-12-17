@@ -119,6 +119,16 @@ namespace DSonia.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DSonia.API v1"));
             }
 
+            if (env.IsProduction())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DSonia.API v1");
+                    c.RoutePrefix = string.Empty;
+                });
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

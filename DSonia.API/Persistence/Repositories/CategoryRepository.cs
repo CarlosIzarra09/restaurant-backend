@@ -22,12 +22,13 @@ namespace DSonia.API.Persistence.Repositories
 
         public async Task<Category> FindById(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.Where(c => c.Id == id).Include(c => c.Products).ToListAsync();
+            return category.Any() ? category.First() : null;
         }
 
         public async Task<IEnumerable<Category>> ListAsync()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.Include(c => c.Products).ToListAsync();
         }
 
         public void Remove(Category category)

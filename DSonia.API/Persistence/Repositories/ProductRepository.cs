@@ -24,7 +24,7 @@ namespace DSonia.API.Persistence.Repositories
         {
             IEnumerable<Product> products = await _context.Products.Where(p => p.CategoryId == categoryId && p.Id == productId)
                 .ToListAsync();
-            return !products.Any() ? products.First() : null;
+            return products.Any() ? products.First() : null;
         }
 
         public async Task<Product> FindById(int id)

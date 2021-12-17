@@ -25,7 +25,16 @@ namespace DSonia.API.Controllers
             _productService = productService;
         }
 
-        
+        [HttpGet]
+        public async Task<IEnumerable<ProductResource>> GetByCategoryId(int categoryId)
+        {
+            var products = await _productService.ListByCategoryIdAsync(categoryId);
+           
+
+            var productsResource = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductResource>>(products);
+
+            return productsResource;
+        }
 
 
         [HttpGet("{productId}")]

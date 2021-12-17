@@ -9,6 +9,5 @@ namespace DSonia.API.Resources
     {
         public string Name { get; set; }
         public float UnitPrice { get; set; }
-        public int UnitInStock { get; set; }       
     }
 }

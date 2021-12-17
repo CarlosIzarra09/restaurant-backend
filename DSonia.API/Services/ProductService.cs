@@ -98,8 +98,7 @@ namespace DSonia.API.Persistence.Repositories
             try
             {
                 existingProduct.Name = product.Name;
-                existingProduct.UnitPrice = product.UnitPrice;
-                existingProduct.UnitInStock = product.UnitInStock;
+                existingProduct.UnitPrice = product.UnitPrice;     
 
                 _productRepository.Update(existingProduct);
                 await _unitOfWork.CompleteAsync();
